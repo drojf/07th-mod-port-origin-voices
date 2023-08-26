@@ -100,4 +100,4 @@ for conf in settings_list:
 
 # Save all chapters replacements as json file
 with open('origin_replacements.json', 'w', encoding='utf-8') as f:
-    json.dump(chapter_to_replacements_list, f, ensure_ascii=False, indent=4)
+    json.dump(chapter_to_replacements_list, f, ensure_ascii=False, indent='\t')
