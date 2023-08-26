@@ -60,7 +60,7 @@ def process_chapter(conf: ProcessSettings):
                 if current_file is None:
                     raise Exception("Current file is unknown!")
 
-                line_replacements_per_file[current_file].append((last_line[1:].rstrip(), line[1:].rstrip()))
+                line_replacements_per_file[current_file.rstrip()].append((last_line[1:].rstrip(), line[1:].rstrip()))
 
         last_line = line
 
