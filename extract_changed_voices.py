@@ -4,8 +4,9 @@ import subprocess
 import json
 
 class ProcessSettings():
-    def __init__(self, chapter_name, chapter_path, before_voices_sha, after_voices_sha) -> None:
+    def __init__(self, chapter_name, script_prefix_fingerprint, chapter_path, before_voices_sha, after_voices_sha) -> None:
         self.chapter_name = chapter_name
+        self.script_prefix_fingerprint = script_prefix_fingerprint
         self.chapter_path = chapter_path
         self.before_voices_sha = before_voices_sha
         self.after_voices_sha = after_voices_sha
@@ -68,18 +69,27 @@ def process_chapter(conf: ProcessSettings):
 
 # Chapter name should match prefix of most scripts inside Update folder
 settings_list = [
-    ProcessSettings('onik', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/1 onikakushi', "bd2a98735890d10c365de93e9b16f71d59af662b", "72a2f10bdd0d9f4559c7345b783611cc649b4775"),
-    ProcessSettings('wata', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/2 watanagashi', "c88e8b898e8876515986fd0784f67d1b920bb6b2", "729fa6a2e0a99b1ad8b9dabf8e23c1c8a98b90e2"),
-    ProcessSettings('tata', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/3 tatarigoroshi', "f4a894daa9f5c5353bbb65b916d6a897f1e615f5", "d9670d2b751c04164afccf7d269b05da38e50151"),
-    ProcessSettings('hima', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/4 himatsubushi', "2a060413500634ef3e19ef21c148658caa0b6914", "94787c4280be455d21f9e0ca27fb9d5fadd636b1"),
-    ProcessSettings('_meak', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/5 meakashi', "38516d0dae8b0786e6ab8777ec86c3ab6a7659ea", "ce5073b6bf137729ddc5e15ac67a96138bef9c0f")
+    # Ch 1-4
+    ProcessSettings('onikakushi', 'onik', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/1 onikakushi', "bd2a98735890d10c365de93e9b16f71d59af662b", "72a2f10bdd0d9f4559c7345b783611cc649b4775"),
+    ProcessSettings('watanagashi', 'wata', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/2 watanagashi', "c88e8b898e8876515986fd0784f67d1b920bb6b2", "729fa6a2e0a99b1ad8b9dabf8e23c1c8a98b90e2"),
+    ProcessSettings('tatarigoroshi', 'tata', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/3 tatarigoroshi', "f4a894daa9f5c5353bbb65b916d6a897f1e615f5", "d9670d2b751c04164afccf7d269b05da38e50151"),
+    ProcessSettings('himatsubushi', 'hima', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/4 himatsubushi', "2a060413500634ef3e19ef21c148658caa0b6914", "94787c4280be455d21f9e0ca27fb9d5fadd636b1"),
+
+    # Ch 5-8
+    ProcessSettings('meakashi', '_meak', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/5 meakashi', "38516d0dae8b0786e6ab8777ec86c3ab6a7659ea", "ce5073b6bf137729ddc5e15ac67a96138bef9c0f"),
+    ProcessSettings('tsumihoroboshi', '_tsum', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/6 tsumihoroboshi', "8a325507f802a27206e62efaceb7c419fc9cbb10", "3d8abd0bfd2cfae7db96a8348c9f5ab1f80d755c"),
+    ProcessSettings('minagoroshi', '_mina', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/7 minagoroshi', "5a173874a9fa4ca9a5eaa2c6a86295999314ac27", "8df8e1d9ba8ede6c99770bbeb8609589b4328867"),
+    ProcessSettings('matsuribayashi', '_mats', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/8 matsuribayashi', "9a06684ca57587ef6c7ff597971103781dbb116c", "e76ee7791b2772191e91c3954c5d907b957f1864"),
+
+    # Ch 9
+    ProcessSettings('rei', 'hiruconsole', 'C:/drojf/large_projects/umineko/HIGURASHI_REPOS/9 higurashi-rei', "70c2ab2ee189560db3d9f73d48da9a0f2b98bf1e", "4bcb9a200ef421de0f2df8ea8460968b033d9c09"),
 ]
 
 # Process each chapter, and collect as replacements per-chapter-per-file
 chapter_to_replacements_list = {}
 for conf in settings_list:
     replacements = process_chapter(conf)
-    chapter_to_replacements_list[conf.chapter_name] = replacements
+    chapter_to_replacements_list[conf.script_prefix_fingerprint] = replacements
 
     # Count total number of replacements for debugging
     total_replacements = 0
